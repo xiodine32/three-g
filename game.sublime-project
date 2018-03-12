@@ -1,0 +1,15 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+            "folder_exclude_patterns": ["out", "obj", "lib", "incl"],
+            "build_systems": [
+                {
+                    "name": "Make & Run",
+                    "shell_cmd": "make"
+                }
+            ]
+		}
+	]
+}
