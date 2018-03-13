@@ -2,6 +2,13 @@
 
 work-in-progress engine for a work-in-progress idea.
 
+# Cygwin requirements
+
+* libpng-devel
+* zlib-devel ( & zlib )
+* make
+* gcc-core ( & gcc-g++ )
+
 # GNU GENERAL PUBLIC LICENSE
 Version 3, 29 June 2007
 

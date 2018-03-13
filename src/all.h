@@ -3,6 +3,7 @@
 
 #define GLFW_DLL
 #include <glfw/glfw3.h>
+#include <png.h>
 
 #include "config.h"
 
