@@ -22,8 +22,12 @@ INCLUDES := $(wildcard $(SRCDIR)/*.h)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 
-run: all
+debug: all
 	@./$(BINDIR)/$(TARGET)
+
+run: ARCH = -mwindows
+run: DEBUG = 
+run: clean debug
 
 all: $(BINDIR)/$(TARGET) $(RESOUT) 
 	@cp lib/glfw3.dll $(BINDIR)
