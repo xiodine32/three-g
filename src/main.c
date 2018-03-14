@@ -5,11 +5,13 @@ int main(void)
 {
     GLFWwindow* window;
 
-    /* Initialize the library */
+    // Initialize the library
     if (!glfwInit())
         return -1;
 
-    /* Create a windowed mode window and its OpenGL context */
+    // please no resize
+    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    // Create a windowed mode window and its OpenGL context
     window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, PROJECT_NAME, NULL, NULL);
     if (!window)
     {
@@ -17,23 +19,23 @@ int main(void)
         return -1;
     }
 
-    /* Make the window's context current */
+    // Make the window's context current
     glfwMakeContextCurrent(window);
 
     engine_load();
     
-    /* Loop until the user closes the window */
+    // Loop until the user closes the window
     while (!glfwWindowShouldClose(window))
     {
-        /* Render here */
+        // Render here
         glClear(GL_COLOR_BUFFER_BIT);
 
         engine_run();
 
-        /* Swap front and back buffers */
+        // Swap front and back buffers
         glfwSwapBuffers(window);
 
-        /* Poll for and process events */
+        // Poll for and process events
         glfwPollEvents();
     }
 

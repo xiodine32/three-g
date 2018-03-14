@@ -1,9 +1,8 @@
 #include "all.h"
 #include "engine.h"
+#include "font.h"
 
-#include <stdio.h>
-
-static GLuint png_texture_load(const char * file_name, int * width, int * height);
+static GLuint png_texture_load(const char *file_name, int *width = NULL, int *height = NULL);
 
 static struct res {
 	const char *path;
@@ -11,28 +10,47 @@ static struct res {
 	int sprite_height;
 	GLuint texture_id;
 } resources[] = {
-	{"res\\test.png", 64, 64, 0},
+    {"res\\test.png", 64, 64, 0},
+	{"res\\font.png", 64, 32, 0},
 	{NULL, 0, 0, 0}
 };
 
 void engine_load()
 {
-	printf("[loading] init\n");
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    glOrtho(0, REAL_WIDTH, REAL_HEIGHT, 0, 0, 1);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+	d("[textures] init\n");
 	for (int i = 0; resources[i].path != NULL; i++) {
-		printf("[loading] load '%s'\n", resources[i].path);
-		int real_width, real_height;
-		resources[i].texture_id = png_texture_load(resources[i].path, &real_width, &real_height);
-		printf("[loading] done '%s' - %u\n", resources[i].path, resources[i].texture_id);
+		d("[textures] load '%s'\n", resources[i].path);
+		resources[i].texture_id = png_texture_load(resources[i].path);
+        d("[textures] done '%s' - %u\n", resources[i].path, resources[i].texture_id);
 	}
+
+    font_init(
+        resources[1].texture_id,
+        resources[1].sprite_width,
+        resources[1].sprite_height,
+        512,
+        512
+    );
 }
 
 void engine_run()
 {
-
+    font_draw(0, 0, 32, "Hello World! %5.2lfs", glfwGetTime());
 }
 
 
-static GLuint png_texture_load(const char * file_name, int * width, int * height)
+static GLuint png_texture_load(const char *file_name, int *width, int *height)
 {
     png_byte header[8];
 
@@ -175,8 +193,8 @@ static GLuint png_texture_load(const char * file_name, int * width, int * height
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexImage2D(GL_TEXTURE_2D, 0, format, temp_width, temp_height, 0, format, GL_UNSIGNED_BYTE, image_data);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     // clean up
     png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);

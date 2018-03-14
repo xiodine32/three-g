@@ -2,12 +2,14 @@ LIB      := -L./lib -lglfw3dll -lopengl32 -lglu32 -lz -lpng
 INC      := -I./incl
 
 CC        = g++
-CFLAGS    = -Wall $(LIB) $(INC) -mwindows
+CFLAGS    = -Wall $(LIB) $(INC) -O2 $(ARCH) $(DEBUG)
 
 LINKER    = g++
-LFLAGS    = -Wall $(LIB) $(INC) -mwindows
+LFLAGS    = -Wall $(LIB) $(INC) -O2 $(ARCH) $(DEBUG)
 
 TARGET    = project.exe
+DEBUG     = -DDEBUG=1
+ARCH      = # -mwindows
 BINDIR    = out
 SRCDIR    = src
 OBJDIR    = obj

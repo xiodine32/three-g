@@ -9,6 +9,11 @@ work-in-progress engine for a work-in-progress idea.
 * make
 * gcc-core ( & gcc-g++ )
 
+# Sublime Text Packages
+
+* BracketHighlighter
+* Git
+
 # GNU GENERAL PUBLIC LICENSE
 Version 3, 29 June 2007
 
