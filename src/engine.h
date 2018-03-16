@@ -3,5 +3,6 @@
 
 void engine_load();
 void engine_run();
+void engine_close();
 
 #endif // __ENGINE_H 

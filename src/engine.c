@@ -1,6 +1,7 @@
 #include "all.h"
 #include "engine.h"
 #include "font.h"
+#include "timers.h"
 
 static GLuint png_texture_load(const char *file_name, int *width = NULL, int *height = NULL);
 
@@ -14,6 +15,12 @@ static struct res {
 	{"res\\font.png", 64, 32, 0},
 	{NULL, 0, 0, 0}
 };
+
+static void engine_tick();
+static void engine_second_tick();
+static int ticks = 0;
+static int total_ticks = 0;
+static int last_fps = 0;
 
 void engine_load()
 {
@@ -42,13 +49,40 @@ void engine_load()
         512,
         512
     );
+
+    timer_new(1, FPS, &engine_tick);
+    timer_new(2, 1, &engine_second_tick);
+}
+
+static void engine_tick()
+{
+    ticks++;
+}
+static void engine_second_tick()
+{
+    last_fps = total_ticks;
+    total_ticks = 0;
 }
 
 void engine_run()
 {
-    font_draw(0, 0, 32, "Hello World! %5.2lfs", glfwGetTime());
+    timer_run();
+    total_ticks++;
+
+    font_draw_left(0, 0, 32, "Hello World! %.3d ticks (60 fps)", ticks);
+    font_draw_left(64, 0, 32, "(ticks): %.3d (generic): %.3d", ticks, total_ticks);
+    font_draw_left(128, 0, 32, "FPS: %.3d", last_fps);
+
+    font_draw_left(200, 0, 16, "Hello World! %.3d ticks (60 fps)", ticks);
+    font_draw_left(232, 0, 16, "(ticks): %.3d (generic): %.3d", ticks, total_ticks);
+    font_draw_left(264, 0, 16, "FPS: %.3d", last_fps);
 }
 
+void engine_close()
+{
+    timer_delete(1);
+    timer_delete(2);
+}
 
 static GLuint png_texture_load(const char *file_name, int *width, int *height)
 {

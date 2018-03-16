@@ -65,7 +65,7 @@ static void font_precompute()
     // TODO: precomputed lists...
 }
 
-void font_draw(double y, double x, int size, const char *fmt, ...)
+void font_draw_left(double y, double x, int size, const char *fmt, ...)
 {
     // to buffer
 
@@ -85,8 +85,8 @@ void font_draw(double y, double x, int size, const char *fmt, ...)
     if (size == 0) size = 16;
     double font_size_width = size / 1024.0;
     double font_size_height = font_size_width * 2;
-    double draw_x = x;
-    double draw_y = y;
+    double draw_x = x * (font_size_width / size);
+    double draw_y = y * (font_size_height / (size * 2));
 
     glBindTexture(GL_TEXTURE_2D, fnt_texture_id);
 

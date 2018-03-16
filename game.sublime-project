@@ -25,11 +25,13 @@
     "build_systems": [
         {
             "name": "Make - Run",
-            "shell_cmd": "make run"
+            "shell_cmd": "make run",
+            "working_dir": "$project_path"
         },
         {
             "name": "Make - Debug",
-            "shell_cmd": "make debug"
+            "shell_cmd": "make debug",
+            "working_dir": "$project_path"
         }
     ]
 }

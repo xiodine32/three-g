@@ -22,6 +22,8 @@ int main(void)
     // Make the window's context current
     glfwMakeContextCurrent(window);
 
+    glfwSwapInterval(1);
+
     engine_load();
     
     // Loop until the user closes the window
@@ -38,6 +40,8 @@ int main(void)
         // Poll for and process events
         glfwPollEvents();
     }
+
+    engine_close();
 
     glfwTerminate();
     return 0;

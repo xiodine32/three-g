@@ -8,5 +8,6 @@ extern double REAL_WIDTH;
 extern double REAL_HEIGHT;
 
 #define SPRINTF_BUFFER_SIZE 4096
+#define FPS 60
 
 #endif // __CONFIG_H 
