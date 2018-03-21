@@ -17,6 +17,7 @@ work-in-progress engine for a work-in-progress idea.
 # Sketches
 
 ![Coords](https://raw.githubusercontent.com/xiodine32/three-g/master/help/coords.png)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fxiodine32%2Fthree-g.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fxiodine32%2Fthree-g?ref=badge_shield)
 
 # GNU GENERAL PUBLIC LICENSE
 Version 3, 29 June 2007
@@ -25,6 +26,9 @@ Copyright (C) 2007 [Free Software Foundation, Inc.](http://fsf.org/)
 
 Everyone is permitted to copy and distribute verbatim copies of this license
 document, but changing it is not allowed.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fxiodine32%2Fthree-g.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fxiodine32%2Fthree-g?ref=badge_large)
 
 ## Preamble
 
