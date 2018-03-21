@@ -1,7 +1,8 @@
-#include "all.h"
 #include "engine.h"
 #include "font.h"
 #include "timers.h"
+#include "scene.h"
+#include "scene_main_menu.h"
 
 static GLuint png_texture_load(const char *file_name, int *width = NULL, int *height = NULL);
 
@@ -18,12 +19,15 @@ static struct res {
 
 static void engine_tick();
 static void engine_second_tick();
-static int ticks = 0;
+
 static int total_ticks = 0;
 static int last_fps = 0;
 
-void engine_load()
+static GLFWwindow *glfw_window = NULL;
+
+void engine_load(GLFWwindow *window)
 {
+    glfw_window = window;
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -50,36 +54,39 @@ void engine_load()
         512
     );
 
-    timer_new(1, FPS, &engine_tick);
+    timer_new(1, ENGINE_TICK, &engine_tick);
     timer_new(2, 1, &engine_second_tick);
+
+    scene_init_main_menu();
+    scene_set(SCENE_MAIN_MENU);
 }
 
 static void engine_tick()
 {
-    ticks++;
+    scene_update();
 }
 static void engine_second_tick()
 {
     last_fps = total_ticks;
+    #ifdef DEBUG
+        char title[128] = {0};
+        sprintf(title, "[DEBUG] %s FPS: %d SCENE: %d", PROJECT_NAME, last_fps, scene_get_id());
+        glfwSetWindowTitle(glfw_window, title);
+    #endif
     total_ticks = 0;
 }
 
 void engine_run()
 {
-    timer_run();
     total_ticks++;
+    timer_run();
 
-    font_draw_left(0, 0, 32, "Hello World! %.3d ticks (60 fps)", ticks);
-    font_draw_left(64, 0, 32, "(ticks): %.3d (generic): %.3d", ticks, total_ticks);
-    font_draw_left(128, 0, 32, "FPS: %.3d", last_fps);
-
-    font_draw_left(200, 0, 16, "Hello World! %.3d ticks (60 fps)", ticks);
-    font_draw_left(232, 0, 16, "(ticks): %.3d (generic): %.3d", ticks, total_ticks);
-    font_draw_left(264, 0, 16, "FPS: %.3d", last_fps);
+    scene_draw();
 }
 
 void engine_close()
 {
+    scene_set(-1);
     timer_delete(1);
     timer_delete(2);
 }

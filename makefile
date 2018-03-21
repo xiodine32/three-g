@@ -2,10 +2,10 @@ LIB      := -L./lib -lglfw3dll -lopengl32 -lglu32 -lz -lpng
 INC      := -I./incl
 
 CC        = g++
-CFLAGS    = -Wall $(LIB) $(INC) -O2 $(ARCH) $(DEBUG)
+CFLAGS    = -Wall $(LIB) $(INC) $(ARCH) $(DEBUG)
 
 LINKER    = g++
-LFLAGS    = -Wall $(LIB) $(INC) -O2 $(ARCH) $(DEBUG)
+LFLAGS    = -Wall $(LIB) $(INC) $(ARCH) $(DEBUG)
 
 TARGET    = project.exe
 DEBUG     = -DDEBUG=1
@@ -26,7 +26,7 @@ debug: all
 	@./$(BINDIR)/$(TARGET)
 
 run: ARCH = -mwindows
-run: DEBUG = 
+run: DEBUG = -O2
 run: clean debug
 
 all: $(BINDIR)/$(TARGET) $(RESOUT) 

@@ -1,13 +1,22 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 
-extern  const char *PROJECT_NAME;
-extern int SCREEN_WIDTH;
-extern int SCREEN_HEIGHT;
-extern double REAL_WIDTH;
-extern double REAL_HEIGHT;
+#define PROJECT_NAME "PROJECT"
+#define SCREEN_WIDTH 800.0
+#define SCREEN_HEIGHT 600.0
+#define REAL_WIDTH (1 * (SCREEN_WIDTH/SCREEN_HEIGHT))
+#define REAL_HEIGHT 1.0
 
 #define SPRINTF_BUFFER_SIZE 4096
-#define FPS 60
+
+// ENGINE
+
+#define ENGINE_FPS 60.0
+#define ENGINE_TICK 60.0
+
+// SCENES
+
+#define SCENES_MAX 256
+#define SCENE_MAIN_MENU 1
 
 #endif // __CONFIG_H 

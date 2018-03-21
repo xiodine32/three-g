@@ -7,7 +7,6 @@
 
 typedef void (*timer_cb)();
 
-
 // creates a new timer, timer_index should be > 0.
 void timer_new(int timer_index, double target_ticks_per_second, timer_cb callback);
 

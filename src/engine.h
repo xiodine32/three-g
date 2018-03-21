@@ -1,7 +1,9 @@
 #ifndef __ENGINE_H
 #define __ENGINE_H
 
-void engine_load();
+#include "all.h"
+
+void engine_load(GLFWwindow *window);
 void engine_run();
 void engine_close();
 

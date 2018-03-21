@@ -22,9 +22,9 @@ int main(void)
     // Make the window's context current
     glfwMakeContextCurrent(window);
 
-    glfwSwapInterval(1);
+    glfwSwapInterval(60.0 / ENGINE_FPS);
 
-    engine_load();
+    engine_load(window);
     
     // Loop until the user closes the window
     while (!glfwWindowShouldClose(window))
