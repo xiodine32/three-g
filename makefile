@@ -22,14 +22,15 @@ INCLUDES := $(wildcard $(SRCDIR)/*.h)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 
-debug: all
-	@./$(BINDIR)/$(TARGET)
-
 run: ARCH = -mwindows
 run: DEBUG = -O2
 run: clean debug
 
-all: $(BINDIR)/$(TARGET) $(RESOUT) 
+debug: all
+	@python linter/cpplint.py --extensions=h,c --filter=-build/include,-readability/casting,-legal/copyright $(SOURCES) $(INCLUDES)
+	@./$(BINDIR)/$(TARGET)
+
+all: $(BINDIR)/$(TARGET) $(RESOUT)
 	@cp lib/glfw3.dll $(BINDIR)
 	@echo "Compiled "$@" successfully."
 
@@ -43,6 +44,7 @@ clean:
 	@rm -rf $(OBJDIR)/*
 	@echo "Cleaned $(OBJDIR)."
 	@mkdir $(BINDIR)/$(RESDIR)
+	@echo "Created $(BINDIR)/$(RESDIR)."
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
 	@$(LINKER) $(OBJECTS) -o $@ $(LFLAGS)

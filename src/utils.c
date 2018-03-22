@@ -1,7 +1,7 @@
 #include "utils.h"
+#include <string.h>
 #include "config.h"
 #include "font.h"
-#include <string.h>
 
 static char file_name[256] = {0};
 static int scene_update_frame;
@@ -13,22 +13,18 @@ static int scene_update_frame;
     #define D_RETURN
 #endif
 
-void d_scene_init(const char *file)
-{
+void d_scene_init(const char *file) {
     D_RETURN;
-    strcpy(file_name, file);
+    snprintf(file_name, sizeof(file_name), "%s", file);
 }
-void d_scene_update(int scene_frame)
-{
+void d_scene_update(int scene_frame) {
     D_RETURN;
     scene_update_frame = scene_frame;
 }
-void d_scene(int scene_frame, int scene_time_delta)
-{
+void d_scene(int scene_frame, int scene_time_delta) {
     D_RETURN;
     font_draw_left(0, 0, 16, "[%s] draw: %4d (%dms) - update: %4d (%dms)",
         file_name,
         scene_frame, scene_time_delta,
-        scene_update_frame, (int)(1000 / ENGINE_TICK)
-    );
+        scene_update_frame, (int)(1000 / ENGINE_TICK));
 }

@@ -15,8 +15,10 @@ static struct fnt {
 
 static void font_precompute();
 
-void font_init(GLuint texture_id, int sprite_width, int sprite_height, int image_width, int image_height)
-{
+void font_init(
+    GLuint texture_id,
+    int sprite_width, int sprite_height,
+    int image_width, int image_height) {
     d("[font] init\n");
 
     fnt_texture_id = texture_id;
@@ -30,8 +32,7 @@ void font_init(GLuint texture_id, int sprite_width, int sprite_height, int image
     d("[font] done\n");
 }
 
-static void font_precompute()
-{
+static void font_precompute() {
     double tex_start_x = 0;
     double tex_start_y = 0;
 
@@ -49,7 +50,12 @@ static void font_precompute()
         fonts[index].tex_start_y = 1 - tex_end_y / (double)fnt_image_height;
         fonts[index].tex_end_x = tex_end_x / (double)fnt_image_width;
         fonts[index].tex_end_y = 1 - tex_start_y / (double)fnt_image_height;
-        d("[font] %2d %c - %6.4lf %6.4lf -> %6.4lf %6.4lf\n", index, i, fonts[index].tex_start_y, fonts[index].tex_start_x, fonts[index].tex_end_y, fonts[index].tex_end_x);
+        d("[font] %2d %c - %6.4lf %6.4lf -> %6.4lf %6.4lf\n", index,
+            i,
+            fonts[index].tex_start_y,
+            fonts[index].tex_start_x,
+            fonts[index].tex_end_y,
+            fonts[index].tex_end_x);
         tex_start_x += tex_step_x;
         tex_end_x += tex_step_x;
 
@@ -62,11 +68,10 @@ static void font_precompute()
         }
     }
 
-    // TODO: precomputed lists...
+    // TODO(@xiodine32): precomputed lists...
 }
 
-void font_draw_left(double y, double x, int size, const char *fmt, ...)
-{
+void font_draw_left(double y, double x, int size, const char *fmt, ...) {
     // to buffer
 
     static char buffer[SPRINTF_BUFFER_SIZE];
@@ -91,17 +96,16 @@ void font_draw_left(double y, double x, int size, const char *fmt, ...)
     glBindTexture(GL_TEXTURE_2D, fnt_texture_id);
 
     for (unsigned int ord = 0; buffer[ord]; ord++) {
-
         glBegin(GL_QUADS);
 
         unsigned char index = buffer[ord] - 32;
 
         glTexCoord2d(fonts[index].tex_start_x, fonts[index].tex_end_y);
         glVertex2d(draw_x, draw_y);
-        
+
         glTexCoord2d(fonts[index].tex_start_x, fonts[index].tex_start_y);
         glVertex2d(draw_x, draw_y + font_size_height);
-        
+
         glTexCoord2d(fonts[index].tex_end_x, fonts[index].tex_start_y);
         glVertex2d(draw_x + font_size_width, draw_y + font_size_height);
 
@@ -113,6 +117,5 @@ void font_draw_left(double y, double x, int size, const char *fmt, ...)
         draw_x += font_size_width;
     }
 
-    glBindTexture(GL_TEXTURE_2D, 0);    
-
+    glBindTexture(GL_TEXTURE_2D, 0);
 }

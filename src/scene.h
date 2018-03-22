@@ -1,5 +1,5 @@
-#ifndef __SCENE_H
-#define __SCENE_H
+#ifndef SRC_SCENE_H_
+#define SRC_SCENE_H_
 
 #include "all.h"
 
@@ -7,8 +7,7 @@ typedef void (*scene_draw_callback)(int scene_frame, int scene_time_delta);
 typedef void (*scene_update_callback)(int scene_frame);
 typedef void (*scene_helper)();
 
-struct scene_t
-{
+struct scene_t {
     scene_helper load;
     scene_draw_callback draw;
     scene_update_callback update;
@@ -17,8 +16,8 @@ struct scene_t
 
 void scene_draw();
 void scene_update();
-void scene_new(int scene_id, scene_t &scene);
+void scene_new(int scene_id, const scene_t &scene);
 void scene_set(int scene_id);
 int scene_get_id();
 
-#endif
+#endif  // SRC_SCENE_H_

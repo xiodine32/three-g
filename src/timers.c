@@ -12,8 +12,9 @@ static struct timer {
 
 static void timer_d();
 
-void timer_new(int timer_index, double target_ticks_per_second, timer_cb callback)
-{
+void timer_new(int timer_index,
+    double target_ticks_per_second,
+    timer_cb callback) {
     timer *new_timer = (timer *)malloc(sizeof(timer));
 
     new_timer->callback = callback;
@@ -33,12 +34,15 @@ void timer_new(int timer_index, double target_ticks_per_second, timer_cb callbac
         first = last;
     }
 
-    d("[timer_new]: %p - index: %d FPS: %5.2lf\n", new_timer, timer_index, target_ticks_per_second);
+    d("[timer_new]: %p - index: %d FPS: %5.2lf\n",
+        new_timer,
+        timer_index,
+        target_ticks_per_second);
+
     timer_d();
 }
 
-static void timer_d() 
-{
+static void timer_d() {
     #ifndef DEBUG
     return;
     #endif
@@ -54,8 +58,7 @@ static void timer_d()
     d("END\n");
 }
 
-void timer_delete(int timer_index)
-{
+void timer_delete(int timer_index) {
     timer *pointer = first;
 
     // empty list
@@ -71,7 +74,7 @@ void timer_delete(int timer_index)
     if (pointer->index == timer_index) {
         d("[timer_delete]: removing first element\n");
         timer *to_delete = pointer;
-        
+
         // dereference
         if (last == first) {
             d("[timer_delete]: also removing last element\n");
@@ -100,7 +103,7 @@ void timer_delete(int timer_index)
     }
 
     timer *to_delete = pointer->next;
-    
+
 
     // last element
 
@@ -120,13 +123,12 @@ void timer_delete(int timer_index)
     timer_d();
 }
 
-void timer_run()
-{
+void timer_run() {
     timer *pointer = first;
 
     while (pointer != NULL) {
-
-        while (glfwGetTime() - pointer->last_tick > pointer->target_ticks_per_second) {
+        while (glfwGetTime() - pointer->last_tick >
+            pointer->target_ticks_per_second) {
             pointer->last_tick += pointer->target_ticks_per_second;
             pointer->callback();
         }

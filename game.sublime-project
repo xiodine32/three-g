@@ -20,7 +20,12 @@
         "highlight_line": true,
         "overlay_scroll_bars": "enabled",
         "save_on_focus_lost": true,
-        "translate_tabs_to_spaces": true
+        "translate_tabs_to_spaces": true,
+        "trim_automatic_white_space": false,
+        "ensure_newline_at_eof_on_save": true,
+        "trim_trailing_white_space_on_save": true,
+        "word_wrap": true,
+        "wrap_width": 80,
     },
     "build_systems": [
         {
@@ -33,5 +38,14 @@
             "shell_cmd": "make debug",
             "working_dir": "$project_path"
         }
-    ]
+    ],
+    "SublimeLinter":
+    {
+        "linters":
+        {
+            "cpplint": {
+                "filter": "-build/include,-readability/casting,-legal/copyright"
+            }
+        }
+    }
 }

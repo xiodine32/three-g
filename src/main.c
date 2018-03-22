@@ -1,8 +1,7 @@
 #include "all.h"
 #include "engine.h"
 
-int main(void)
-{
+int main(void) {
     GLFWwindow* window;
 
     // Initialize the library
@@ -12,9 +11,12 @@ int main(void)
     // please no resize
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
     // Create a windowed mode window and its OpenGL context
-    window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, PROJECT_NAME, NULL, NULL);
-    if (!window)
-    {
+    window = glfwCreateWindow(
+        SCREEN_WIDTH, SCREEN_HEIGHT,
+        PROJECT_NAME,
+        NULL, NULL);
+
+    if (!window) {
         glfwTerminate();
         return -1;
     }
@@ -22,13 +24,14 @@ int main(void)
     // Make the window's context current
     glfwMakeContextCurrent(window);
 
-    glfwSwapInterval(60.0 / ENGINE_FPS);
+    if (ENGINE_VSYNC) {
+        glfwSwapInterval(60.0 / ENGINE_FPS);
+    }
 
     engine_load(window);
-    
+
     // Loop until the user closes the window
-    while (!glfwWindowShouldClose(window))
-    {
+    while (!glfwWindowShouldClose(window)) {
         // Render here
         glClear(GL_COLOR_BUFFER_BIT);
 

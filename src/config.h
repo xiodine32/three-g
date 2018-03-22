@@ -1,5 +1,5 @@
-#ifndef __CONFIG_H
-#define __CONFIG_H
+#ifndef SRC_CONFIG_H_
+#define SRC_CONFIG_H_
 
 #define PROJECT_NAME "PROJECT"
 #define SCREEN_WIDTH 800.0
@@ -9,14 +9,19 @@
 
 #define SPRINTF_BUFFER_SIZE 4096
 
+
 // ENGINE
 
+
+#define ENGINE_VSYNC false
 #define ENGINE_FPS 60.0
 #define ENGINE_TICK 60.0
 
-// SCENES
+
+// scenes
+
 
 #define SCENES_MAX 256
 #define SCENE_MAIN_MENU 1
 
-#endif // __CONFIG_H 
+#endif  // SRC_CONFIG_H_

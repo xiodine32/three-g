@@ -1,11 +1,11 @@
-#ifndef __ALL_H
-#define __ALL_H
+#ifndef SRC_ALL_H_
+#define SRC_ALL_H_
 
 
 #ifdef DEBUG
 #define d(...) printf(__VA_ARGS__);
 #else
-#define d(...) ;
+#define d(...)
 #endif
 
 #include <stdio.h>
@@ -18,4 +18,4 @@
 
 #include "config.h"
 
-#endif // __ALL_H 
+#endif  // SRC_ALL_H_

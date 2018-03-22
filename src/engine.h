@@ -1,5 +1,5 @@
-#ifndef __ENGINE_H
-#define __ENGINE_H
+#ifndef SRC_ENGINE_H_
+#define SRC_ENGINE_H_
 
 #include "all.h"
 
@@ -7,4 +7,4 @@ void engine_load(GLFWwindow *window);
 void engine_run();
 void engine_close();
 
-#endif // __ENGINE_H 
+#endif  // SRC_ENGINE_H_

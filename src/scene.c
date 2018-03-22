@@ -16,8 +16,7 @@ static int current_scene_update_delta;
 /*
 This method draws the current scene.
 */
-void scene_draw()
-{
+void scene_draw() {
     if (current_scene == NULL) return;
 
     current_scene_draw_frame++;
@@ -34,8 +33,7 @@ void scene_draw()
 /*
 This method updates the current scene.
 */
-void scene_update()
-{
+void scene_update() {
     if (current_scene == NULL) return;
 
     current_scene_update_frame++;
@@ -48,15 +46,13 @@ void scene_update()
 /*
 This method creates a new scene and stores it for later use.
 */
-void scene_new(int scene_id, scene_t &scene)
-{
+void scene_new(int scene_id, const scene_t &scene) {
     if (scene_id >= 0 && scene_id < SCENES_MAX) {
         scenes[scene_id] = scene;
         d("[scene_new]: Created scene %d\n", scene_id);
     } else {
         d("[scene_new]: Could not create scene %d\n", scene_id);
     }
-    
 }
 
 /*
@@ -64,8 +60,7 @@ This method sets the current scene to the specified id.
 If id is -1, there will not be a scene.
 It also handles loading / unloading of scene resources.
 */
-void scene_set(int scene_id)
-{
+void scene_set(int scene_id) {
     // unload active scene
     if (current_scene != NULL) {
         current_scene->unload();
@@ -84,17 +79,16 @@ void scene_set(int scene_id)
     scene_t *possible_scene = &(scenes[scene_id]);
 
     // check for valid scene
-    if (possible_scene->load == NULL || 
+    if (possible_scene->load == NULL ||
         possible_scene->draw == NULL ||
         possible_scene->update == NULL ||
         possible_scene->unload == NULL) {
-        d("[scene_set]: Possible scene %d does not have all pointers valid. (load:%p draw:%p update:%p unload:%p)\n",
-            scene_id,
+        d("[scene_set]: invalid pointers scene %d", scene_id);
+        d(" (load:%p draw:%p update:%p unload:%p)\n",
             possible_scene->load,
             possible_scene->draw,
             possible_scene->update,
-            possible_scene->unload
-        );
+            possible_scene->unload);
         return;
     }
 
@@ -108,13 +102,11 @@ void scene_set(int scene_id)
     current_scene_update_delta = 0;
 
     current_scene->load();
-
 }
 
 /*
 This method gets the current scene id.
 */
-int scene_get_id()
-{
+int scene_get_id() {
     return current_scene_id;
 }

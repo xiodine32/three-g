@@ -1,6 +1,6 @@
-#ifndef __SCENE_MAIN_MENU_H
-#define __SCENE_MAIN_MENU_H
+#ifndef SRC_SCENE_MAIN_MENU_H_
+#define SRC_SCENE_MAIN_MENU_H_
 
 void scene_init_main_menu();
 
-#endif
+#endif  // SRC_SCENE_MAIN_MENU_H_
