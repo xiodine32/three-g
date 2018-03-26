@@ -25,6 +25,7 @@ work-in-progress engine for a work-in-progress idea.
 # Sketches
 
 ![Coords](https://raw.githubusercontent.com/xiodine32/three-g/master/help/coords.png)
+![Screen](https://raw.githubusercontent.com/xiodine32/three-g/master/help/screen.png)
 
 # GNU GENERAL PUBLIC LICENSE
 Version 3, 29 June 2007

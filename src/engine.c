@@ -4,6 +4,8 @@
 #include "scene.h"
 #include "scene_main_menu.h"
 
+bool key_state[512] = {0};
+
 static GLuint png_texture_load(const char *file_name,
     int *width = NULL, int *height = NULL);
 
@@ -20,14 +22,23 @@ static struct res {
 
 static void engine_tick();
 static void engine_second_tick();
+static void key_callback(
+    GLFWwindow* window,
+    int key,
+    int scancode,
+    int action,
+    int mods);
 
 static int total_ticks = 0;
 static int last_fps = 0;
 
-static GLFWwindow *glfw_window = NULL;
+GLFWwindow *glfw_window = NULL;
 
 void engine_load(GLFWwindow *window) {
     glfw_window = window;
+
+    glfwSetKeyCallback(window, &key_callback);
+
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -35,7 +46,7 @@ void engine_load(GLFWwindow *window) {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    glOrtho(0, REAL_WIDTH, REAL_HEIGHT, 0, 0, 1);
+    glOrtho(0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT, 0, 0, 1);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -58,6 +69,17 @@ void engine_load(GLFWwindow *window) {
 
     scene_init_main_menu();
     scene_set(SCENE_MAIN_MENU);
+}
+
+static void key_callback(
+    GLFWwindow* window,
+    int key,
+    int scancode,
+    int action,
+    int mods) {
+    key_state[key] = action == GLFW_PRESS;
+    d("[key_callback]: key: %d = %d (%s)\n", key,
+        key_state[key], glfwGetKeyName(key, scancode));
 }
 
 static void engine_tick() {

@@ -26,18 +26,34 @@ static void scene_main_menu_load() {
     d_scene_init(__FILE__);
 }
 
+static bool raw_selected = false;
+
 /*
 This method updates the main menu scene.
 */
 static void scene_main_menu_update(int scene_frame) {
-    //
+    raw_selected = mouse_in(
+        0.25, 0.25, VIEWPORT_WIDTH - 0.5, VIEWPORT_HEIGHT - 0.5);
 }
 
 /*
 This method draws the main menu scene.
 */
 static void scene_main_menu_draw(int scene_frame, int scene_time_delta) {
-    //
+    if (raw_selected) {
+        glColor4f(1, 0, 0, 1);
+    }
+
+    double x = 0.25, y = 0.25;
+    double width = VIEWPORT_WIDTH - 0.5, height = VIEWPORT_HEIGHT - 0.5;
+    glBegin(GL_QUADS);
+    glVertex2d(x, y);
+    glVertex2d(x, y + height);
+    glVertex2d(x + width, y + height);
+    glVertex2d(x + width, y);
+    glEnd();
+
+    glColor4f(1, 1, 1, 1);
 }
 
 /*

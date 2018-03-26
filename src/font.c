@@ -88,8 +88,8 @@ void font_draw_left(double y, double x, int size, const char *fmt, ...) {
     // write
 
     if (size == 0) size = 16;
-    double font_size_width = size / 1024.0;
-    double font_size_height = font_size_width * 2;
+    double font_size_width = size / 1024.0;  // 1536.0;
+    double font_size_height = font_size_width * 2 * REAL_WIDTH;
     double draw_x = x * (font_size_width / size);
     double draw_y = y * (font_size_height / (size * 2));
 

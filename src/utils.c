@@ -1,3 +1,5 @@
+#include "all.h"
+#include "engine.h"
 #include "utils.h"
 #include <string.h>
 #include "config.h"
@@ -27,4 +29,21 @@ void d_scene(int scene_frame, int scene_time_delta) {
         file_name,
         scene_frame, scene_time_delta,
         scene_update_frame, (int)(1000 / ENGINE_TICK));
+}
+
+bool mouse_in(double x, double y, double w, double h) {
+    double xpos, ypos;
+    glfwGetCursorPos(glfw_window, &xpos, &ypos);
+    xpos /= SCREEN_WIDTH;
+    ypos /= SCREEN_HEIGHT;
+    if (xpos < 0 || ypos < 0) {
+        return false;
+    }
+    if (xpos > 1 || ypos > 1) {
+        return false;
+    }
+    xpos *= VIEWPORT_WIDTH;
+    ypos *= VIEWPORT_HEIGHT;
+
+    return (x < xpos && xpos < x + w) && (y < ypos && ypos < y + h);
 }
