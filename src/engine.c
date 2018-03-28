@@ -3,6 +3,7 @@
 #include "timers.h"
 #include "scene.h"
 #include "scene_main_menu.h"
+#include "scene_about.h"
 
 bool key_state[512] = {0};
 
@@ -68,6 +69,7 @@ void engine_load(GLFWwindow *window) {
     timer_new(2, 1, &engine_second_tick);
 
     scene_init_main_menu();
+    scene_init_about();
     scene_set(SCENE_MAIN_MENU);
 }
 

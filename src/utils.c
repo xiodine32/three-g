@@ -47,3 +47,46 @@ bool mouse_in(double x, double y, double w, double h) {
 
     return (x < xpos && xpos < x + w) && (y < ypos && ypos < y + h);
 }
+
+bool key_pressed(int key) {
+    return key_state[key];
+}
+
+bool mouse_pressed(bool left_button,
+    bool middle_button,
+    bool right_button) {
+    left_button = left_button &&
+        glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_LEFT)
+            == GLFW_PRESS;
+    middle_button = middle_button &&
+        glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_MIDDLE)
+            == GLFW_PRESS;
+    right_button = right_button &&
+        glfwGetMouseButton(glfw_window, GLFW_MOUSE_BUTTON_RIGHT)
+            == GLFW_PRESS;
+
+    return left_button || middle_button || right_button;
+}
+
+
+void bezier_curve(double p0x, double p0y,
+    double p1x, double p1y,
+    double p2x, double p2y,
+    double p3x, double p3y,
+    double delta,
+    double *out_x, double *out_y) {
+    double powi2 = pow(1 - delta, 2);
+    double powi3 = pow(1 - delta, 3);
+    double pow2 = pow(delta, 2);
+    double pow3 = pow(delta, 3);
+
+    if (out_x != NULL) {
+    *out_x = powi3 * p0x + 3 * delta * powi2 * p1x +
+        3 * pow2 * (1 - delta) * p2x + pow3 * p3x;
+    }
+
+    if (out_y != NULL) {
+    *out_y = powi3 * p0y + 3 * delta * powi2 * p1y +
+        3 * pow2 * (1 - delta) * p2y + pow3 * p3y;
+    }
+}

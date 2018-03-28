@@ -18,12 +18,21 @@
 #define ENGINE_VSYNC true
 #define ENGINE_FPS 60.0
 #define ENGINE_TICK 60.0
+#define ENGINE_FPS_RATE 1000.0 / ENGINE_FPS
+#define ENGINE_TICK_RATE 1000.0 / ENGINE_TICK
 
-
-// scenes
-
+// SCENES
 
 #define SCENES_MAX 256
 #define SCENE_MAIN_MENU 1
+#define SCENE_ABOUT 2
+#define SCENE_ANIMATION_DEFAULT 610
+
+
+// BEZIER CURVES
+
+#define BEZIER_PRETTY 0, 0, 0.51, 0.92, 0.24, 1.15, 1, 1
+#define BEZIER_EASE_IN_OUT 0, 0, 0.645, 0.045, 0.355, 1, 1, 1
+#define BEZIER_EASE_IN_BACK 0, 0, 0.6, -0.28, 0.735, 0.045, 1, 1
 
 #endif  // SRC_CONFIG_H_

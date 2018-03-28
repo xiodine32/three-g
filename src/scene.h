@@ -18,6 +18,10 @@ void scene_draw();
 void scene_update();
 void scene_new(int scene_id, const scene_t &scene);
 void scene_set(int scene_id);
+void scene_animate_in(int scene_id,
+    GLuint time_interval = SCENE_ANIMATION_DEFAULT);
+void scene_animate_out(int scene_id,
+    GLuint time_interval = SCENE_ANIMATION_DEFAULT);
 int scene_get_id();
 
 #endif  // SRC_SCENE_H_
