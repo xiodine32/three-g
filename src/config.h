@@ -31,8 +31,10 @@
 
 // BEZIER CURVES
 
-#define BEZIER_PRETTY 0, 0, 0.51, 0.92, 0.24, 1.15, 1, 1
-#define BEZIER_EASE_IN_OUT 0, 0, 0.645, 0.045, 0.355, 1, 1, 1
+
+#define BEZIER_PRETTY 0, 0, 0.55, 0, 0.15, 1, 1, 1
+#define BEZIER_EASE 0, 0, 0.42, 0, 0.58, 1, 1, 1
 #define BEZIER_EASE_IN_BACK 0, 0, 0.6, -0.28, 0.735, 0.045, 1, 1
+
 
 #endif  // SRC_CONFIG_H_
