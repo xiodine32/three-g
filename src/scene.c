@@ -46,8 +46,8 @@ static void simple_particles_update() {
         if (sp_life[i] <= 0) {
             // spawn
             sp_life[i] = SP_LIFE_MAX * (0.3 + myrand() / (double) 32767);
-            sp_x[i] = -1 + 2 * VIEWPORT_WIDTH * (myrand() / (double) 32767);
-            sp_y[i] = -1 + 2 * VIEWPORT_HEIGHT * (myrand() / (double) 32767);
+            sp_x[i] = VIEWPORT_WIDTH * (myrand() / (double) 32767);
+            sp_y[i] = VIEWPORT_HEIGHT * (myrand() / (double) 32767);
             sp_dx[i] = (myrand() / (double) 32767 - 0.5);
             sp_dy[i] = (myrand() / (double) 32767 - 0.5);
         }
