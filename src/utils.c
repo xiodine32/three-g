@@ -90,3 +90,14 @@ void bezier_curve(double p0x, double p0y,
         3 * pow2 * (1 - delta) * p2y + pow3 * p3y;
     }
 }
+
+static GLuint next = 1;
+
+int myrand(void) {
+    next = next * 1103515245 + 12345;
+    return((unsigned)(next/65536) % 32768);
+}
+
+double min(double x, double y) {
+    return x > y ? y : x;
+}

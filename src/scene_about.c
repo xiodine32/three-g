@@ -20,7 +20,7 @@ void scene_init_about() {
 
 
 void scene_about_load() {
-    d("[scene_about_load]: stub\n");\
+    d("[scene_about_load]: stub\n");
     d_scene_init(__FILE__);
 }
 
@@ -32,8 +32,28 @@ void scene_about_update(int scene_frame) {
 }
 
 void scene_about_draw(int scene_frame, int scene_time_delta) {
-    font_draw_left(60, 60, 32, "About");
-    font_draw_left(150, 60, 16, "Click anywhere to go back.");
+    glBindTexture(GL_TEXTURE_2D, 1);
+
+    glBegin(GL_QUADS);
+
+
+    glTexCoord2d(0, 1);
+    glVertex2d(0, 0);
+
+    glTexCoord2d(0, 0);
+    glVertex2d(0, 0 + VIEWPORT_HEIGHT);
+
+    glTexCoord2d(1, 0);
+    glVertex2d(0 + VIEWPORT_WIDTH, 0 + VIEWPORT_HEIGHT);
+
+    glTexCoord2d(1, 1);
+    glVertex2d(0 + VIEWPORT_WIDTH, 0);
+
+    glEnd();
+
+
+    font_draw_left(900, 32, 32, "About");
+    font_draw_left(970, 64, 16, "Click anywhere to go back.");
 }
 
 void scene_about_unload() {

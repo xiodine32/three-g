@@ -40,6 +40,8 @@ void engine_load(GLFWwindow *window) {
 
     glfwSetKeyCallback(window, &key_callback);
 
+    glClearColor(0.125, 0.125, 0.125, 1);
+
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -47,7 +49,7 @@ void engine_load(GLFWwindow *window) {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    glOrtho(0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT, 0, 0, 1);
+    glOrtho(0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT, 0, -2, 2);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 

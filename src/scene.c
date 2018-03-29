@@ -1,3 +1,5 @@
+#include "all.h"
+
 #include "scene.h"
 #include "utils.h"
 
@@ -23,6 +25,59 @@ static int animation_target_id;
 static void scene_set_active(int scene_id, const scene_t &scene);
 static void scene_unload();
 
+
+#define SP_COUNT 128
+#define SP_LIFE_MAX 2.0
+#define SP_SIZE 0.02
+
+static double sp_x[SP_COUNT];
+static double sp_y[SP_COUNT];
+static double sp_dx[SP_COUNT];
+static double sp_dy[SP_COUNT];
+static double sp_life[SP_COUNT];
+
+// TODO(@xiodine32): Refactor out simple_particles.
+// TODO(@xiodine32): Refactor out S R T animations.
+
+
+
+static void simple_particles_update() {
+    for (int i = 0; i < SP_COUNT; i++) {
+        if (sp_life[i] <= 0) {
+            // spawn
+            sp_life[i] = SP_LIFE_MAX * (0.3 + myrand() / (double) 32767);
+            sp_x[i] = -1 + 2 * VIEWPORT_WIDTH * (myrand() / (double) 32767);
+            sp_y[i] = -1 + 2 * VIEWPORT_HEIGHT * (myrand() / (double) 32767);
+            sp_dx[i] = (myrand() / (double) 32767 - 0.5);
+            sp_dy[i] = (myrand() / (double) 32767 - 0.5);
+        }
+        sp_life[i] -= ENGINE_TICK_RATE / 1000.0;
+        sp_x[i] += 0.002 * sp_dx[i];
+        sp_y[i] += 0.002 * sp_dy[i];
+    }
+}
+
+static void simple_particles_draw() {
+    for (int i = 0; i < SP_COUNT; i++) {
+        double delta = sp_life[i] / (2 * SP_LIFE_MAX);
+
+        glBegin(GL_TRIANGLE_FAN);
+
+        glColor4f(1, 1, 1, min(delta, 1 - delta));
+        glVertex2d(sp_x[i], sp_y[i]);
+
+        glColor4f(1, 1, 1, 0);
+        for (double d = 0; d < 2 * 3.14159265; d += 0.04) {
+            glVertex2d(sp_x[i] + SP_SIZE * cos(d), sp_y[i] + SP_SIZE * sin(d));
+        }
+
+        glVertex2d(sp_x[i] + SP_SIZE, sp_y[i]);
+
+        glEnd();
+    }
+    glColor4f(1, 1, 1, 1);
+}
+
 /*
 This method draws the current scene.
 */
@@ -35,12 +90,26 @@ void scene_draw() {
     current_scene_draw_delta = tick - current_scene_draw_last_tick;
     current_scene_draw_last_tick = tick;
 
-    d_scene(current_scene_draw_frame, current_scene_draw_delta);
-
     if (animation_status == 0) {
+        glColor4f(0.235, 0.235, 0.235, 1);
+
+        glBegin(GL_QUADS);
+
+        glVertex2d(0, 0);
+        glVertex2d(0, VIEWPORT_HEIGHT);
+        glVertex2d(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        glVertex2d(VIEWPORT_WIDTH, 0);
+
+        glEnd();
+
+        glColor4f(1, 1, 1, 1);
+
+        d_scene(current_scene_draw_frame, current_scene_draw_delta);
+
         current_scene->draw(current_scene_draw_frame,
             current_scene_draw_delta);
     }
+
     if (animation_status != 0) {
         double delta = animation_frames / (double)animation_total_frames;
 
@@ -48,13 +117,46 @@ void scene_draw() {
         bezier_curve(BEZIER_PRETTY, delta, NULL, &bezier_delta);
         double inverted = animation_status == 1 ? 1 : -1;
 
+        double scale_out_delta = 1;
+        if (bezier_delta < 0.5) {
+            scale_out_delta = bezier_delta / 0.5;
+        }
+        double scale_out = 1 - scale_out_delta;
+
+        double scale_in_delta = 0;
+        if (bezier_delta > 0.5) {
+            scale_in_delta = (bezier_delta - 0.5) / 0.5;
+        }
+        double scale_in = scale_in_delta;
+
         double end_delta = inverted * (1 - bezier_delta);
         double start_delta = inverted * (-1 * bezier_delta);
 
+        simple_particles_draw();
+
         glPushMatrix();
 
-        glRotated(30 * end_delta, 0, 0, 1);
-        glTranslated(0, end_delta, 0);
+        glTranslated(0, 1 * end_delta, 0);
+        glScaled(scale_in, scale_in, scale_in);
+        glTranslated(0.5, 0.5, 0);
+        glRotated(90 * end_delta, 0, 0, 1);
+        glRotated(90 - 90 * scale_in, 0, 1, 0);
+        glTranslated(-0.5, -0.5, 0);
+
+        glColor4f(0.235, 0.235, 0.235, 1);
+
+        glBegin(GL_QUADS);
+
+        glVertex2d(0, 0);
+        glVertex2d(0, VIEWPORT_HEIGHT);
+        glVertex2d(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        glVertex2d(VIEWPORT_WIDTH, 0);
+
+        glEnd();
+
+        glColor4f(1, 1, 1, 1);
+
+        d_scene(current_scene_draw_frame, current_scene_draw_delta);
 
         animation_target->draw(-1, current_scene_draw_delta);
 
@@ -62,8 +164,27 @@ void scene_draw() {
 
         glPushMatrix();
 
-        glRotated(30 * start_delta, 0, 0, 1);
-        glTranslated(0, start_delta, 0);
+        glTranslated(0, 1 * start_delta, 0);
+        glScaled(scale_out, scale_out, scale_out);
+        glTranslated(0.5, 0.5, 0);
+        glRotated(90 * start_delta, 0, 0, 1);
+        glRotated(90 - 90 * scale_out, 0, 1, 0);
+        glTranslated(-0.5, -0.5, 0);
+
+        glColor4f(0.235, 0.235, 0.235, 1);
+
+        glBegin(GL_QUADS);
+
+        glVertex2d(0, 0);
+        glVertex2d(0, VIEWPORT_HEIGHT);
+        glVertex2d(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        glVertex2d(VIEWPORT_WIDTH, 0);
+
+        glEnd();
+
+        glColor4f(1, 1, 1, 1);
+
+        d_scene(current_scene_draw_frame, current_scene_draw_delta);
 
         current_scene->draw(current_scene_draw_frame,
             current_scene_draw_delta);
@@ -79,6 +200,8 @@ void scene_update() {
     if (current_scene == NULL) return;
 
     current_scene_update_frame++;
+
+    simple_particles_update();
 
     if (animation_status == 0) {
         d_scene_update(current_scene_update_frame);

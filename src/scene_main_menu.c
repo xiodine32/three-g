@@ -7,6 +7,8 @@ static void scene_main_menu_load();
 static void scene_main_menu_update(int scene_frame);
 static void scene_main_menu_draw(int scene_frame, int scene_time_delta);
 static void scene_main_menu_unload();
+static GLubyte button_about = 0;
+static GLubyte button_play = 0;
 
 void scene_init_main_menu() {
     scene_t scn;
@@ -24,10 +26,10 @@ This method loads the main menu scene.
 static void scene_main_menu_load() {
     d("[scene_main_menu_load]: stub\n");
     d_scene_init(__FILE__);
-}
 
-static GLubyte button_about = 0;
-static GLubyte button_play = 0;
+    button_about = 0;
+    button_play = 0;
+}
 
 /*
 This method updates the main menu scene.
@@ -112,4 +114,6 @@ This method unloads the main menu scene.
 */
 static void scene_main_menu_unload() {
     d("[scene_main_menu_unload]: stub\n");
+    button_about = 0;
+    button_play = 0;
 }
