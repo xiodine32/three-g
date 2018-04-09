@@ -27,7 +27,7 @@ run: DEBUG = -O2
 run: clean debug
 
 debug: all
-	@python linter/cpplint.py --extensions=h,c --filter=-build/include,-readability/casting,-legal/copyright $(SOURCES) $(INCLUDES)
+	@cpplint --extensions=h,c --filter=-build/include,-readability/casting,-legal/copyright $(SOURCES) $(INCLUDES)
 	@./$(BINDIR)/$(TARGET)
 
 all: $(BINDIR)/$(TARGET) $(RESOUT)
